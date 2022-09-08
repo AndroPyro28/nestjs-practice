@@ -1,8 +1,8 @@
-import { Controller, Get, HttpException, HttpStatus, Post, Req, Res, Body } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Post, Req, Res, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CustomerClass } from '../classes/CustomerClass';
 import { ServicesService } from '../services/customer.service';
-import { validate, validateOrReject } from 'class-validator'
+import { validate, validateOrReject,  } from 'class-validator'
 
 @Controller('customers')
 export class ControllersController {
@@ -30,25 +30,29 @@ export class ControllersController {
   }
 
   @Post('')
+  @UsePipes(ValidationPipe)
   async createUser(@Body() BodyCustomer: CustomerClass, @Res() res: Response) { //body parser @Body()
     try {
 
-      const newCustomer = new CustomerClass(BodyCustomer);
-      console.log(newCustomer)
-      const result = await validate(newCustomer) //validating body
+      // alternative for express
+      // const newCustomer = new CustomerClass(BodyCustomer);
 
-      if (result.length > 0) { // will execute when there is an error
-        const errMessage = Object.values(result[0].constraints)[0]
-        throw new HttpException(errMessage, HttpStatus.BAD_REQUEST)
-      }
+      // const result = await validate(newCustomer) //validating body
 
-      const queryResult = this.appServices.createCustomer(BodyCustomer);
+      // if (result.length > 0) { // will execute when there is an error
+      //   console.log(result)
+      //   const errMessage = Object.values(result[0].constraints)[0]
+      //   throw new HttpException(errMessage, HttpStatus.BAD_REQUEST)
+      // }
+
+       const queryResult = this.appServices.createCustomer(BodyCustomer);
       if (!queryResult.success) {
         throw new HttpException('Email already exist!', HttpStatus.BAD_REQUEST);
       }
       return res.status(200).json(queryResult);
 
     } catch (error) {
+      console.log('yes')
       return res.status(error.status).json(error)
     }
   }

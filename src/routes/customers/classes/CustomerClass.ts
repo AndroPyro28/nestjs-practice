@@ -19,16 +19,16 @@ class CustomerAddress {
 }
 
 export class CustomerClass {
-
-    constructor({id, email, password, address}) {
-        this.id = id
-        this.email = email
-        this.password = password
-        this.address = address;
-    }
+    
+    // constructor({id=undefined, email="", password="", address={} as CustomerAddress}) {
+    //     this.id = id
+    //     this.email = email
+    //     this.password = password
+    //     this.address = address;
+    // }
 
     @IsNumber()
-    id: number;
+    id: number | undefined;
 
     @IsEmail()
     email:string;
