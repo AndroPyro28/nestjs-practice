@@ -30,6 +30,6 @@ export class ServicesService {
   }
 
   getAdminByUsername = (username: string) => {
-    return this.admins.find(admin => admin.username == username );
+    return plainToInstance(SerializedAdmin, this.admins.find(admin => admin.username == username ))
   }
 }

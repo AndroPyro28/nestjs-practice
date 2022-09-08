@@ -8,4 +8,8 @@ export class SerializedAdmin {
     username: string;
     @Exclude()
     password: string;
+
+    constructor(partial: Partial<SerializedAdmin>) {
+        Object.assign(this, partial);
+    }
 }

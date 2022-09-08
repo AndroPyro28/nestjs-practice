@@ -1,7 +1,7 @@
-import { Controller, Get, Req, Res, HttpException, HttpStatus, Inject, Param, Body } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, HttpStatus, Inject, Param, Body, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ServicesService } from '../services/admin.service';
-import { Admin } from '../types/Admin';
+import { Admin, SerializedAdmin } from '../types/Admin';
 
 @Controller('admin')
 export class ControllersController {
@@ -27,7 +27,9 @@ export class ControllersController {
   }
 
   @Get(':username')
-  getAdminByUsername (@Param('username') username: string) {
+  @UseInterceptors(ClassSerializerInterceptor)
+
+  getAdminByUsername (@Param('username') username: string, @Res() res: Response) {
     try {
       const admin = this.adminServices.getAdminByUsername(username);
 
@@ -35,8 +37,10 @@ export class ControllersController {
         throw new HttpException('Admin not found!', HttpStatus.EXPECTATION_FAILED);
       }
 
+      return res.status(200).json(new SerializedAdmin(admin))
+
     } catch (error) {
-      return
+      return res.status(error.status).json(error)
     }
   }
 }

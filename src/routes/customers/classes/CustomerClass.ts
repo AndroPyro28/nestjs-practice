@@ -20,6 +20,8 @@ class CustomerAddress {
 
 export class CustomerClass {
     
+      // alternative for express
+
     // constructor({id=undefined, email="", password="", address={} as CustomerAddress}) {
     //     this.id = id
     //     this.email = email
