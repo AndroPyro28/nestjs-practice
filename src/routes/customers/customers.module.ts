@@ -10,7 +10,9 @@ import { SomeMiddleWare } from './middlewares/someMiddleware';
 })
 export class CustomersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // to give some routes a middleware simply include the path and method of a middleware you chose
+    
+    /* to give some routes a middleware simply include the path and method of a middleware you chose */
+
     // consumer.apply(ValidateCustomerMiddlewares, SomeMiddleWare) 
     // .forRoutes(
     //   {
@@ -23,7 +25,8 @@ export class CustomersModule implements NestModule {
     //   },
     // )
 
-    // to give all routes a middleware simply include the entire middleware
+    /* to give all routes a middleware simply include the entire middleware */
+
       consumer.apply(ValidateCustomerMiddlewares, SomeMiddleWare)
       .exclude(
         { // exclude method is making some of your routes excluded to a middleware
