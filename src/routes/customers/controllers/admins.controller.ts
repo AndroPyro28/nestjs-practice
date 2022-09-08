@@ -5,7 +5,7 @@ import { ServicesService } from '../services/customer.service';
 import { validate, validateOrReject,  } from 'class-validator'
 
 @Controller('customers')
-export class ControllersController {
+export class AdminsController {
   constructor(private readonly appServices: ServicesService) { }
 
   @Get('')
