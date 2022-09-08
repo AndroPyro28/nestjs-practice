@@ -2,7 +2,8 @@ import { Controller, Get, HttpException, HttpStatus, Post, Req, Res, Body } from
 import { Request, Response } from 'express';
 import { CustomerClass } from '../classes/CustomerClass';
 import { ServicesService } from '../services/customer.service';
-import { validateOrReject } from 'class-validator'
+import { validate, validateOrReject } from 'class-validator'
+
 @Controller('customers')
 export class ControllersController {
   constructor(private readonly appServices: ServicesService) { }
@@ -31,24 +32,22 @@ export class ControllersController {
   @Post('')
   async createUser(@Body() BodyCustomer: CustomerClass, @Res() res: Response) { //body parser @Body()
     try {
-      const newCustomer = new CustomerClass(BodyCustomer);
-      validateOrReject(newCustomer)
-        .then((yes) => {
-          const result = this.appServices.createCustomer(BodyCustomer);
-          
-          if (!result.success) {
-            throw new HttpException('Email already exist!', HttpStatus.BAD_REQUEST);
-          }
 
-          return res.status(200).json(result);
-        })
-        
-        .catch(result => {
-          return res.status(400).json({
-            msg:Object.values(result[0].constraints)[0],
-            success:false
-          })
-        })
+      const newCustomer = new CustomerClass(BodyCustomer);
+      console.log(newCustomer)
+      const result = await validate(newCustomer) //validating body
+
+      if (result.length > 0) { // will execute when there is an error
+        const errMessage = Object.values(result[0].constraints)[0]
+        throw new HttpException(errMessage, HttpStatus.BAD_REQUEST)
+      }
+
+      const queryResult = this.appServices.createCustomer(BodyCustomer);
+      if (!queryResult.success) {
+        throw new HttpException('Email already exist!', HttpStatus.BAD_REQUEST);
+      }
+      return res.status(200).json(queryResult);
+
     } catch (error) {
       return res.status(error.status).json(error)
     }

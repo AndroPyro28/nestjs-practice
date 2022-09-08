@@ -8,16 +8,37 @@ export class ServicesService {
       id: 1,
       email: 'email1@gmail.com',
       password: '123123123',
+      address:{
+        address1:"12345",
+        address2:"",
+        zip:"12345",
+        city:"some city",
+        state:"some state"
+      }
     },
     {
       id: 2,
       email: 'email2@gmail.com',
       password: '123123123',
+      address:{
+        address1:"12345",
+        address2:"",
+        zip:"12345",
+        city:"some city",
+        state:"some state"
+      }
     },
     {
       id: 3,
       email: 'email3@gmail.com',
       password: '123123123',
+      address:{
+        address1:"12345",
+        address2:"",
+        zip:"12345",
+        city:"some city",
+        state:"some state"
+      }
     },
   ];
 
