@@ -7,7 +7,7 @@ import { validate, validateOrReject,  } from 'class-validator'
 @Controller('customers')
 export class AdminsController {
   constructor(private readonly appServices: ServicesService) { }
-
+  
   @Get('')
   getCustomers(@Req() req: Request, @Res() res: Response) {
     const customers = this.appServices.findCustomer();
