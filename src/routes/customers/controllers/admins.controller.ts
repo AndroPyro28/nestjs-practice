@@ -11,7 +11,7 @@ export class AdminsController {
   @Get('')
   getCustomers(@Req() req: Request, @Res() res: Response) {
     const customers = this.appServices.findCustomer();
-    res.status(200).json(customers);
+    res.status(HttpStatus.OK).json(customers);
   }
 
   @Get(':id')
@@ -22,7 +22,7 @@ export class AdminsController {
         throw new HttpException('customer not found!', HttpStatus.BAD_REQUEST)
       }
 
-      return res.status(200).json(customer);
+      return res.status(HttpStatus.OK).json(customer);
 
     } catch (error) {
       return res.status(error.status).json(error);
@@ -49,13 +49,10 @@ export class AdminsController {
       if (!queryResult.success) {
         throw new HttpException('Email already exist!', HttpStatus.BAD_REQUEST);
       }
-      return res.status(200).json(queryResult);
+      return res.status(HttpStatus.CREATED).json(queryResult);
 
     } catch (error) {
-      console.log('yes')
       return res.status(error.status).json(error)
     }
   }
-
-
 }

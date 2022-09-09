@@ -1,5 +1,6 @@
 import {Exclude} from "class-transformer";
 export interface Admin {
+    id: number;
     username: string;
     password: string;
 }

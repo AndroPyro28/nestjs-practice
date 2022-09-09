@@ -6,7 +6,7 @@ async function bootstrap() {
     origin:"*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
   }});
-  
+  console.log(process.env.SOME_SECRET_KEY)
   app.setGlobalPrefix('api')
 
   app.enableCors({
