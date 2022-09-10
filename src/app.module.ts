@@ -4,6 +4,8 @@ import { AdminModule } from './routes/admin/admin.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaUserModule } from './routes/prisma-user/prisma-user.module';
 import { AuthModule } from './routes/auth/auth.module';
+import { PaymentModule } from './routes/payment/payment.module';
+import { GatewayModule } from './routes/gateway/gateway.module';
 @Module({
   imports: [
     CustomersModule,
@@ -11,6 +13,8 @@ import { AuthModule } from './routes/auth/auth.module';
     ConfigModule.forRoot(),
     PrismaUserModule,
     AuthModule,
+    PaymentModule,
+    GatewayModule
   ],
   controllers: [],
   providers: [],
