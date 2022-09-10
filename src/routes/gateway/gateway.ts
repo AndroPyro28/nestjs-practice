@@ -9,12 +9,13 @@ import { Server } from "socket.io";
 export class MyGateway implements OnModuleInit {
 
     @WebSocketServer()
-    private server: Server;
+    private readonly io: Server;
 
     onModuleInit() {
-        this.server.on('connection', (socket) => {
+        this.io.on('connection', (socket) => {
             socket.on('newMessage', (body) => {
                 console.log(body)
+                socket.emit('sendMessage', `you sent me a ${body} so i will give it back to you!`)
             })
         })
     }
