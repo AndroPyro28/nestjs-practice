@@ -1,11 +1,13 @@
 import { OnModuleInit } from "@nestjs/common";
 import { WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import { Server } from "socket.io";
+
 @WebSocketGateway({
     cors: {
         origin:"*"
     }
 })
+
 export class MyGateway implements OnModuleInit {
 
     @WebSocketServer() // this is decorator that tells that this application is a server of a socket
