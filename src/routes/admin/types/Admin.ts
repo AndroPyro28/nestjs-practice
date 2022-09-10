@@ -1,16 +1,16 @@
-import {Exclude} from "class-transformer";
+import { Exclude } from 'class-transformer';
 export interface Admin {
-    id: number;
-    username: string;
-    password: string;
+  id: number;
+  username: string;
+  password: string;
 }
 
 export class SerializedAdmin {
-    username: string;
-    @Exclude()
-    password: string;
+  username: string;
+  @Exclude()
+  password: string;
 
-    constructor(partial: Partial<SerializedAdmin>) {
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<SerializedAdmin>) {
+    Object.assign(this, partial);
+  }
 }

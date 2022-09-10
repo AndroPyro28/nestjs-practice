@@ -1,13 +1,24 @@
-import { Controller, Get, HttpException, HttpStatus, Post, Req, Res, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  Body,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CustomerClass } from '../classes/CustomerClass';
 import { ServicesService } from '../services/customer.service';
-import { validate, validateOrReject,  } from 'class-validator'
+import { validate, validateOrReject } from 'class-validator';
 
 @Controller('customers')
 export class AdminsController {
-  constructor(private readonly appServices: ServicesService) { }
-  
+  constructor(private readonly appServices: ServicesService) {}
+
   @Get('')
   getCustomers(@Req() req: Request, @Res() res: Response) {
     const customers = this.appServices.findCustomer();
@@ -19,11 +30,10 @@ export class AdminsController {
     try {
       const customer = this.appServices.findCustomerById(Number(req.params.id));
       if (!customer) {
-        throw new HttpException('customer not found!', HttpStatus.BAD_REQUEST)
+        throw new HttpException('customer not found!', HttpStatus.BAD_REQUEST);
       }
 
       return res.status(HttpStatus.OK).json(customer);
-
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -31,9 +41,9 @@ export class AdminsController {
 
   @Post('')
   @UsePipes(ValidationPipe)
-  async createUser(@Body() BodyCustomer: CustomerClass, @Res() res: Response) { //body parser @Body()
+  async createUser(@Body() BodyCustomer: CustomerClass, @Res() res: Response) {
+    //body parser @Body()
     try {
-
       // alternative for express
       // const newCustomer = new CustomerClass(BodyCustomer);
 
@@ -45,14 +55,13 @@ export class AdminsController {
       //   throw new HttpException(errMessage, HttpStatus.BAD_REQUEST)
       // }
 
-       const queryResult = this.appServices.createCustomer(BodyCustomer);
+      const queryResult = this.appServices.createCustomer(BodyCustomer);
       if (!queryResult.success) {
         throw new HttpException('Email already exist!', HttpStatus.BAD_REQUEST);
       }
       return res.status(HttpStatus.CREATED).json(queryResult);
-
     } catch (error) {
-      return res.status(error.status).json(error)
+      return res.status(error.status).json(error);
     }
   }
 }

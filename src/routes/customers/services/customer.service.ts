@@ -3,42 +3,42 @@ import { CustomerClass } from '../classes/CustomerClass';
 
 @Injectable()
 export class ServicesService {
- private users:CustomerClass[]  = [
+  private users: CustomerClass[] = [
     {
       id: 1,
       email: 'email1@gmail.com',
       password: '123123123',
-      address:{
-        address1:"12345",
-        address2:"",
-        zip:"12345",
-        city:"some city",
-        state:"some state"
-      }
+      address: {
+        address1: '12345',
+        address2: '',
+        zip: '12345',
+        city: 'some city',
+        state: 'some state',
+      },
     },
     {
       id: 2,
       email: 'email2@gmail.com',
       password: '123123123',
-      address:{
-        address1:"12345",
-        address2:"",
-        zip:"12345",
-        city:"some city",
-        state:"some state"
-      }
+      address: {
+        address1: '12345',
+        address2: '',
+        zip: '12345',
+        city: 'some city',
+        state: 'some state',
+      },
     },
     {
       id: 3,
       email: 'email3@gmail.com',
       password: '123123123',
-      address:{
-        address1:"12345",
-        address2:"",
-        zip:"12345",
-        city:"some city",
-        state:"some state"
-      }
+      address: {
+        address1: '12345',
+        address2: '',
+        zip: '12345',
+        city: 'some city',
+        state: 'some state',
+      },
     },
   ];
 
@@ -47,23 +47,24 @@ export class ServicesService {
   }
 
   findCustomerById(id: number) {
-    return this.users
-    .find((user) => user.id == id);
+    return this.users.find((user) => user.id == id);
   }
 
   createCustomer(customer: CustomerClass) {
-    const emailAlreadyExist = this.users.some(user => user.email == customer.email);
+    const emailAlreadyExist = this.users.some(
+      (user) => user.email == customer.email,
+    );
 
     if (emailAlreadyExist) {
       return {
         success: false,
-      }
+      };
     }
 
     this.users.push(customer);
     return {
       data: this.users,
-      success: true
+      success: true,
     };
   }
 }

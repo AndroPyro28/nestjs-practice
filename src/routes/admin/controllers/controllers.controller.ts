@@ -1,4 +1,17 @@
-import { Controller, ParseIntPipe, Get, Req, Res, HttpException, HttpStatus, Inject, Param, Body, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+  Controller,
+  ParseIntPipe,
+  Get,
+  Req,
+  Res,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+  Body,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserNotFoundException } from '../exceptions/UserNotFound';
 import { ServicesService } from '../services/admin.service';
@@ -6,8 +19,7 @@ import { Admin, SerializedAdmin } from '../types/Admin';
 
 @Controller('admin')
 export class ControllersController {
-
-  constructor(private readonly adminServices: ServicesService) { }
+  constructor(private readonly adminServices: ServicesService) {}
 
   @Get('')
   getAdmin(@Req() req: Request, @Res() res: Response) {
@@ -15,13 +27,16 @@ export class ControllersController {
       const adminList = this.adminServices.getAdminsButSerialized() as Admin[];
 
       if (!adminList) {
-        throw new HttpException('No admin found!', HttpStatus.EXPECTATION_FAILED);
+        throw new HttpException(
+          'No admin found!',
+          HttpStatus.EXPECTATION_FAILED,
+        );
       }
 
       return res.status(HttpStatus.OK).json({
         data: adminList,
-        success: true
-      })
+        success: true,
+      });
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -34,12 +49,9 @@ export class ControllersController {
 
       if (!admin) throw new UserNotFoundException();
 
-      return res.status(HttpStatus.OK).json(admin)
-
+      return res.status(HttpStatus.OK).json(admin);
     } catch (error) {
       return res.status(error.status).json(error);
     }
-
   }
-
 }
