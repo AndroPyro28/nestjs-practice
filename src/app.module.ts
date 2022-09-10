@@ -5,7 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaUserModule } from './routes/prisma-user/prisma-user.module';
 import { AuthModule } from './routes/auth/auth.module';
 import { PaymentModule } from './routes/payment/payment.module';
-import { GatewayModule } from './routes/gateway/gateway.module';
+import { GatewayModule } from './routes/websocket/gateway.module';
+
 @Module({
   imports: [
     CustomersModule,
