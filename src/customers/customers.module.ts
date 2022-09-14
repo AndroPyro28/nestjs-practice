@@ -12,10 +12,19 @@ import { AdminsController } from './controllers/admins.controller';
 import { ValidateCustomerMiddlewares } from './middlewares/validateCustomer';
 import { SomeMiddleWare } from './middlewares/someMiddleware';
 import { Request, Response, NextFunction } from 'express';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
+  imports: [ThrottlerModule.forRoot({
+    ttl: 10,
+    limit:1
+  })],
   controllers: [AdminsController],
-  providers: [ServicesService],
+  providers: [ServicesService, {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }],
 })
 export class CustomersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
