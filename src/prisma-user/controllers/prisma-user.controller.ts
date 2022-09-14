@@ -17,6 +17,7 @@ import { ServicesService as PrismaUserService } from '../services/prisma-user.se
 import { Response } from 'express';
 import { CreateUserDto, isEmailDto, CarDto } from '../Dto';
 import { sign, verify } from 'jsonwebtoken';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('prisma')
 export class ControllerController {
@@ -51,7 +52,7 @@ export class ControllerController {
 
     return res.status(HttpStatus.CREATED).json({ createResult, payload });
   }
-
+  @SkipThrottle() // this decorator mark a end point to skip throttling
   @Get('/user')
   async getAllUsers(@Res() res: Response) {
     const getAllPrismaUsers = await this.PrismaUserService.GetAllUsers();
