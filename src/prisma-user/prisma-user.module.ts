@@ -7,7 +7,7 @@ import { ServicesService as PrismaUserService } from './services/prisma-user.ser
 @Module({
   imports: [ThrottlerModule.forRoot({ // rate limitting api
     ttl: 10,
-    limit:2
+    limit:3
   })],
   controllers: [PrismaUserController],
   providers: [PrismaUserService, 
