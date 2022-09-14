@@ -6,6 +6,8 @@ import { PrismaUserModule } from './prisma-user/prisma-user.module';
 import { AuthModule } from './auth/auth.module';
 import { PaymentModule } from './payment/payment.module';
 import { GatewayModule } from './websocket/gateway.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -15,9 +17,18 @@ import { GatewayModule } from './websocket/gateway.module';
     PrismaUserModule,
     AuthModule,
     PaymentModule,
-    GatewayModule
+    GatewayModule,
+    // ThrottlerModule.forRoot({ rate limitting api
+    //   ttl: 10,
+    //   limit: 2
+    // })
   ],
   controllers: [],
-  providers: [],
+  providers: [
+  //   {
+  //   provide: APP_GUARD,
+  //   useClass: ThrottlerGuard
+  // }
+],
 })
 export class AppModule {}
